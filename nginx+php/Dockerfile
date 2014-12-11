@@ -1,5 +1,5 @@
 # LEMP stack as a docker container
-FROM ubuntu:14.04
+FROM ubuntu
 MAINTAINER dongping sheng <shengdongping@me.com>
 
 # install nginx
@@ -13,9 +13,6 @@ COPY default /etc/nginx/sites-available/default
 # install PHP
 RUN apt-get -y install php5-fpm php5-mysql
 RUN sed -i s/\;cgi\.fix_pathinfo\s*\=\s*1/cgi.fix_pathinfo\=0/ /etc/php5/fpm/php.ini
-
-# add volumes for debug and file manipulation
-VOLUME ["/Users/dongping/dockerfiles/nginx/":"/data0"]
 
 EXPOSE 80
 
