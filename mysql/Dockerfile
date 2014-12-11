@@ -4,7 +4,8 @@
 #
 
 # Pull base image.
-FROM dockerfile/ubuntu
+FROM ubuntu
+MAINTAINER dongping sheng <shengdongping@me.com>
 
 # Install MySQL.
 RUN apt-get update
