@@ -1,4 +1,8 @@
-# LEMP stack as a docker container
+# NGINX + PHP 
+# 
+# Startup 
+#    docker run -d -v /Users/dongping/dockerfiles/nginx\+php:/data0 -p 80:80 nginx 
+
 FROM ubuntu
 MAINTAINER dongping sheng <shengdongping@me.com>
 
@@ -14,6 +18,8 @@ COPY default /etc/nginx/sites-available/default
 RUN apt-get -y install php5-fpm php5-mysql
 RUN sed -i s/\;cgi\.fix_pathinfo\s*\=\s*1/cgi.fix_pathinfo\=0/ /etc/php5/fpm/php.ini
 
-EXPOSE 80
 
-CMD service php5-fpm start && nginx
+EXPOSE 80 
+
+CMD service php5-fpm start && nginx 
+
