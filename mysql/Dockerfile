@@ -2,7 +2,7 @@
 # MySQL Dockerfile
 #
 # Startup 
-#    docker run -it -v /Users/dongping/mysqldata:/data0 -p 3306 mysql
+#    docker run -it -v /Users/dongping/mysqldata:/data0 -p 3306:3306 --name mysqlserver mysql
 #
 
 # Pull base image.
@@ -15,14 +15,12 @@ MAINTAINER dongping sheng <shengdongping@me.com>
 # Install MySQL.
 RUN apt-get install -y mysql-server 
 
-# 停止MYSQL
-RUN service mysql stop
 COPY my.cnf /etc/mysql/my.cnf
 
-# Expose ports.
+RUN echo "GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY '';" >/etc/mysql/init
 EXPOSE 3306
 
 
 # Define default command.
-CMD ["service", "mysql", "start"]
+CMD ["/usr/bin/mysqld_safe"]
 

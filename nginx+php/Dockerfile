@@ -2,7 +2,8 @@
 # 
 # Startup 
 #    
-#    docker run -d -v /Users/dongping/dockerfiles/nginx\+php:/data0 -p 80:80 nginx 
+#    docker run -d -v /Users/dongping/dockerfiles/nginx\+php:/data0 -p 80:80 --link=mysqlserver::db nginx 
+#    docker run -it -v /Users/dongping/dockerfiles/nginx\+php:/data0 -p 80:80 --link=mysqlserver::db nginx /bin/bash 
 #    
 #    此镜象直接把/data0目录设置为document_root目录，所以需要把你自己的web目录通过-v参数挂接到docker容器里。
 #    测试方法：http://192.168.59.103/phpinfo.php
@@ -38,6 +39,9 @@ RUN apt-get -y install libpcre3-dev
 RUN apt-get -y install wget
 RUN wget http://pecl.php.net/get/yaf-2.2.9.tgz
 RUN tar zxf yaf-2.2.9.tgz && cd yaf-2.2.9 && /usr/bin/phpize  && ./configure --with-php-config=/etc/php5/fpm/php.ini --with-php-config=/usr/bin/php-config5 && make && make install
+
+# install mysql client
+RUN apt-get -y install mysql-client-5.5
 
 EXPOSE 80 
 
