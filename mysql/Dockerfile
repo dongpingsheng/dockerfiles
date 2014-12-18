@@ -17,8 +17,8 @@
 FROM ubuntu
 MAINTAINER dongping sheng <shengdongping@me.com>
 
-# RUN apt-get update
-# RUN apt-get -y upgrade
+RUN apt-get update
+RUN apt-get -y upgrade
 
 # Install MySQL.
 RUN apt-get install -y mysql-server 
