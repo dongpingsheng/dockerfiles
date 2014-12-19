@@ -22,7 +22,6 @@ RUN apt-get -y install nginx
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
 
-COPY default /etc/nginx/sites-available/default
 
 # install PHP
 RUN apt-get -y install php5-cli php5-fpm php5-mysql
@@ -43,6 +42,7 @@ RUN apt-get -y install wget
 RUN wget http://pecl.php.net/get/yaf-2.2.9.tgz
 RUN tar zxf yaf-2.2.9.tgz && cd yaf-2.2.9 && /usr/bin/phpize  && ./configure --with-php-config=/etc/php5/fpm/php.ini --with-php-config=/usr/bin/php-config5 && make && make install
 
+COPY default /etc/nginx/sites-available/default
 
 EXPOSE 80 
 
