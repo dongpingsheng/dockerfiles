@@ -9,7 +9,7 @@
 #    测试方法：http://192.168.59.103/phpinfo.php
 #
 
-FROM ubuntu:14
+FROM ubuntu:14.04
 MAINTAINER dongping sheng <shengdongping@me.com>
 
 # update all 
