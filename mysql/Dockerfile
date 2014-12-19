@@ -14,7 +14,7 @@
 #
 
 # Pull base image.
-FROM ubuntu
+FROM ubuntu:14
 MAINTAINER dongping sheng <shengdongping@me.com>
 
 RUN apt-get update
