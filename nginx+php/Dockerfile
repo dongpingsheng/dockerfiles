@@ -3,7 +3,6 @@
 # Startup 
 #    
 #    docker run -d -v /Users/dongping/dockerfiles/nginx\+php:/data0 -p 80:80 -p 1080:22 --name=nginx nginx 
-#    docker run -it -v /Users/dongping/dockerfiles/nginx\+php:/data0 -p 80:80 -p 1080:22 --name=nginx nginx /bin/bash 
 #    
 #    此镜象直接把/data0目录设置为document_root目录，所以需要把你自己的web目录通过-v参数挂接到docker容器里。
 #    测试方法：http://192.168.59.103/phpinfo.php
