@@ -7,7 +7,7 @@
 #
 #    首先需要给当前mysqlserver添加各IP都能连进来的授权，否则mysqlserver只能在容器中访问。
 #    所以在第一次启动时，需要进入bash配置一下，具体流程如下
-#    mysql -uroot -e "GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY '';"
+#    mysql -uroot -e "GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY '';
 #
 
 # Pull base image.
