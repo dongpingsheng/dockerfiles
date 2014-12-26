@@ -40,17 +40,13 @@ RUN apt-get -y install php5-cli php5-fpm php5-mysql
 RUN apt-get -y install php5-dev
 RUN apt-get -y install libpcre3-dev
 
-
 # install mysql client
 RUN apt-get -y install mysql-client-5.5
 
 # Install MySQL.
 RUN apt-get install -y mysql-server-5.5 
 
-
-
 # install yaf framework
-
 RUN wget http://pecl.php.net/get/yaf-2.2.9.tgz
 RUN tar zxf yaf-2.2.9.tgz && cd yaf-2.2.9 && /usr/bin/phpize  && ./configure --with-php-config=/etc/php5/fpm/php.ini --with-php-config=/usr/bin/php-config5 && make && make install
 
