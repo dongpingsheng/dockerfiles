@@ -2,8 +2,8 @@
 # 
 # Startup 
 #
-#    docker run -d -v /Users/dongping/dockerfiles/lamp:/data0 -v /var/ -v /etc -p 3306:3306 -p 80:80 -p 1080:22 --name=lamp lamp 
-#	docker run -it --rm -v /Users/dongping/dockerfiles/lamp:/data0 -v /var/ -v /etc -p 3306:3306 -p 80:80 -p 1080:22 --name=lamp lamp /bin/bash
+#    docker run -d -v /Users/dongping/dockerfiles/lamp:/data0  -p 3306:3306 -p 80:80 -p 1080:22 --name=lamp lamp 
+#    docker run -it --rm -v /Users/dongping/dockerfiles/lamp:/data0  -p 3306:3306 -p 80:80 -p 1080:22 --name=lamp lamp /bin/bash
 #
 #    1) 此镜象直接把/data0目录设置为document_root目录，所以需要把你自己的web目录通过-v参数挂接到docker容器里。
 #       测试方法：http://192.168.59.103/phpinfo.php
@@ -58,8 +58,6 @@ RUN tar zxf yaf-2.2.9.tgz && cd yaf-2.2.9 && /usr/bin/phpize  && ./configure --w
 
 ################## CONFIG #####################
 
-
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
 COPY default /etc/nginx/sites-available/default
 
@@ -80,6 +78,8 @@ EXPOSE 3306
 EXPOSE 22
 EXPOSE 80
 
+VOLUME ["/var", "/etc"]
+
 
 # Define default command.
-CMD service ssh start && service php5-fpm start && service mysql start && nginx 
+CMD service ssh start && service php5-fpm start && service mysql start && service nginx start && tail -f /var/log/nginx/access.log
