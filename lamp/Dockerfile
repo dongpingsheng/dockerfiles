@@ -18,9 +18,8 @@
 # Pull base image.
 FROM ubuntu:14.04
 MAINTAINER dongping sheng <shengdongping@me.com>
-
-RUN apt-get update
-RUN apt-get -y upgrade
+ 
+RUN yum upgrade
 
 
 # install build-essential 
@@ -33,7 +32,7 @@ RUN apt-get -y install wget
 RUN apt-get -y install openssh-server
 
 # install nginx
-RUN apt-get -y install nginx
+RUN yum install -y nginx
 
 # install PHP
 RUN apt-get -y install php5-cli php5-fpm php5-mysql

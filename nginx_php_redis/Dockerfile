@@ -23,17 +23,17 @@ RUN apt-get -y upgrade
 RUN apt-get -y install nginx
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
+COPY default /etc/nginx/sites-available/default
 
 
 # install PHP
 RUN apt install -y php7.4 php7.4-cli php7.4-fpm php7.4-mysql php7.4-json php7.4-bcmath php7.4-common php7.4-curl php-redis
-RUN sed -i s/\;cgi\.fix_pathinfo\s*\=\s*1/cgi.fix_pathinfo\=0/ /etc/php5/fpm/php.ini
+COPY php.ini /etc/php7.4/php.ini
 
 # install mysql client
 RUN apt-get -y install mysql-client
 
 
-COPY default /etc/nginx/sites-available/default
 
 EXPOSE 80 
 
