@@ -2,7 +2,7 @@
 # 
 # Startup 
 #    
-#    docker run -d -v /Users/dongping/dockerfiles/nginx\+php:/data0 -p 80:80 -p 1080:22 --name=nginx nginx 
+#    docker run -d -v /home/data0:/data0 -p 80:80 -p 22:22 --name=nginx nginx
 #
 #    docker run -it -v /home/data0:/data0  -p 3306:3306 -p 80:80 -p 22:22 --name=lamp lamp /bin/bash
 #    
