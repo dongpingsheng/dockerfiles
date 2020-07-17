@@ -15,7 +15,7 @@ MAINTAINER dongping sheng <shengdongping@me.com>
 
 # update all 
 RUN apt update
-RUN apt upgrade
+RUN apt -y upgrade
 
 # base
 RUN apt install -y vim 
