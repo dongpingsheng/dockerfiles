@@ -18,10 +18,16 @@ RUN apt-get update --fix-missing
 RUN apt-get -y upgrade
 
 # base
+RUN apt install -y apt-utils
 RUN apt install -y vim 
 RUN apt install -y wget
 
+# install build-essential
+RUN apt install -y  build-essential
+
+
 # install nginx
+RUN DEBIAN_FRONTEND=noninteractive apt install -y tzdata
 RUN apt install -y nginx
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
@@ -31,10 +37,6 @@ COPY default /etc/nginx/sites-available/default
 # install PHP
 RUN apt install -y php7.4 php7.4-cli php7.4-fpm php7.4-mysql php7.4-json php7.4-bcmath php7.4-common php7.4-curl php-redis
 COPY php.ini /etc/php/7.4/fpm/php.ini
-
-
-# install build-essential
-RUN apt install -y  build-essential
 
 # install yaf framework
 RUN apt -y install php7.4-dev libpcre3-dev
