@@ -17,10 +17,15 @@ MAINTAINER dongping sheng <shengdongping@me.com>
 RUN apt-get update
 RUN apt-get -y upgrade
 
+# base
+RUN apt install -y vim 
+RUN apt install -y wget
+# install build-essential
+RUN apt-get -y install build-essential
+
 
 # install nginx
-
-RUN apt-get -y install nginx
+RUN apt install -y nginx
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
 
@@ -32,6 +37,11 @@ RUN sed -i s/\;cgi\.fix_pathinfo\s*\=\s*1/cgi.fix_pathinfo\=0/ /etc/php5/fpm/php
 # install mysql client
 RUN apt-get -y install mysql-client
 
+
+# install yaf framework
+RUN apt -y install php5-dev libpcre3-dev
+RUN wget https://github.com/laruence/yaf/archive/yaf-3.2.5.tar.gz
+RUN tar zxf yaf-3.2.5.tar.gz && cd yaf-yaf-3.2.5/ && /usr/bin/phpize  && ./configure --with-php-config=/etc/php7.4/fpm/php.ini --with-php-config=/usr/bin/php-config7 && make && make install
 
 COPY default /etc/nginx/sites-available/default
 
