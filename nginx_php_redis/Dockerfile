@@ -41,8 +41,7 @@ RUN apt install -y php7.4 php7.4-cli php7.4-fpm php7.4-mysql php7.4-json php7.4-
 # install yaf framework
 RUN apt -y install php7.4-dev libpcre3-dev
 RUN wget https://github.com/laruence/yaf/archive/yaf-3.2.5.tar.gz
-RUN tar zxf yaf-3.2.5.tar.gz && cd yaf-yaf-3.2.5/
-RUN /usr/bin/phpize  && ./configure --with-php-config=/etc/php7.4/fpm/php.ini --with-php-config=/usr/bin/php-config && make && make install
+RUN tar zxf yaf-3.2.5.tar.gz && cd yaf-yaf-3.2.5/ && /usr/bin/phpize  && ./configure --with-php-config=/etc/php7.4/fpm/php.ini --with-php-config=/usr/bin/php-config && make && make install
 
 
 # install mysql client
