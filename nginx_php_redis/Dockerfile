@@ -20,9 +20,6 @@ RUN apt -y upgrade
 # base
 RUN apt install -y vim 
 RUN apt install -y wget
-# install build-essential
-RUN apt -y install build-essential
-
 
 # install nginx
 RUN apt install -y nginx
@@ -34,6 +31,10 @@ COPY default /etc/nginx/sites-available/default
 # install PHP
 RUN apt install -y php7.4 php7.4-cli php7.4-fpm php7.4-mysql php7.4-json php7.4-bcmath php7.4-common php7.4-curl php-redis
 COPY php.ini /etc/php/7.4/fpm/php.ini
+
+
+# install build-essential
+RUN apt -y install build-essential
 
 # install yaf framework
 RUN apt -y install php7.4-dev libpcre3-dev
