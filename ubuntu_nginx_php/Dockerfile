@@ -1,7 +1,11 @@
 # NGINX + PHP with yaf
 # 
 # Startup 
-#    
+#
+#    chcon -Rt svirt_sandbox_file_t /home/publish
+#
+#    docker run -v /home/publish/data0:/data0 -v /home/publish/log:/var/log -p 80:80 -p 1080:22 -d --name=ubuntu_nginx_php ubuntu_nginx_php
+#
 #    docker run -v /home/publish/data0:/data0 -v /home/publish/log:/var/log -p 80:80 -p 1080:22 -it ubuntu_nginx_php /bin/bash
 #    
 #    此镜象直接把/data0目录设置为document_root目录，所以需要把你自己的web目录通过-v参数挂接到docker容器里。
