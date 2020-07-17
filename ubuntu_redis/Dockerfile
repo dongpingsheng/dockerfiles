@@ -23,7 +23,7 @@ RUN apt-get -y upgrade
 RUN apt install -y apt-utils
 
 # redis
-RUN apt install redis-server redis
+RUN apt install -y redis-server redis
 
 EXPOSE 6379
 
