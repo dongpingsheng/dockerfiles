@@ -15,14 +15,14 @@ MAINTAINER dongping sheng <shengdongping@me.com>
 
 # update all 
 RUN apt update
-RUN apt -y --fix-missing upgrade
+RUN apt -y upgrade
 
 # base
 RUN apt install -y vim 
 RUN apt install -y wget
 
 # install nginx
-RUN apt install -y nginx
+RUN apt install -y --fix-missing nginx
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
 COPY default /etc/nginx/sites-available/default
@@ -33,15 +33,15 @@ RUN apt install -y php7.4 php7.4-cli php7.4-fpm php7.4-mysql php7.4-json php7.4-
 COPY php.ini /etc/php/7.4/fpm/php.ini
 
 
-## install build-essential
-#RUN apt -y install build-essential
-#
-## install yaf framework
-#RUN apt -y install php7.4-dev libpcre3-dev
-#RUN wget https://github.com/laruence/yaf/archive/yaf-3.2.5.tar.gz
-#RUN tar zxf yaf-3.2.5.tar.gz && cd yaf-yaf-3.2.5/
-#RUN /usr/bin/phpize  && ./configure --with-php-config=/etc/php7.4/fpm/php.ini --with-php-config=/usr/bin/php-config && make && make install
-#RUN echo "extension=yaf.so" >> /etc/php/7.4/fpm/php.ini
+# install build-essential
+RUN apt install -y --fix-missing  build-essential
+
+# install yaf framework
+RUN apt -y install php7.4-dev libpcre3-dev
+RUN wget https://github.com/laruence/yaf/archive/yaf-3.2.5.tar.gz
+RUN tar zxf yaf-3.2.5.tar.gz && cd yaf-yaf-3.2.5/
+RUN /usr/bin/phpize  && ./configure --with-php-config=/etc/php7.4/fpm/php.ini --with-php-config=/usr/bin/php-config && make && make install
+RUN echo "extension=yaf.so" >> /etc/php/7.4/fpm/php.ini
 
 
 # install mysql client
