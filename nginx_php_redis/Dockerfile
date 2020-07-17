@@ -14,8 +14,8 @@ FROM ubuntu:latest
 MAINTAINER dongping sheng <shengdongping@me.com>
 
 # update all 
-RUN apt update --fix-missing
-RUN apt -y dist-upgrade
+RUN apt-get update --fix-missing
+RUN apt-get -y upgrade
 
 # base
 RUN apt install -y vim 
