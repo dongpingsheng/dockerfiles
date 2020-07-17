@@ -14,15 +14,15 @@ FROM ubuntu:latest
 MAINTAINER dongping sheng <shengdongping@me.com>
 
 # update all 
-RUN apt update
-RUN apt -y upgrade
+RUN apt update --fix-missing
+RUN apt -y dist-upgrade
 
 # base
 RUN apt install -y vim 
 RUN apt install -y wget
 
 # install nginx
-RUN apt install -y --fix-missing nginx
+RUN apt install -y nginx
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
 COPY default /etc/nginx/sites-available/default
@@ -34,7 +34,7 @@ COPY php.ini /etc/php/7.4/fpm/php.ini
 
 
 # install build-essential
-RUN apt install -y --fix-missing  build-essential
+RUN apt install -y  build-essential
 
 # install yaf framework
 RUN apt -y install php7.4-dev libpcre3-dev
