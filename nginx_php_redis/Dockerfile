@@ -14,14 +14,14 @@ FROM ubuntu:latest
 MAINTAINER dongping sheng <shengdongping@me.com>
 
 # update all 
-RUN apt-get update
-RUN apt-get -y upgrade
+RUN apt update
+RUN apt upgrade
 
 # base
 RUN apt install -y vim 
 RUN apt install -y wget
 # install build-essential
-RUN apt-get -y install build-essential
+RUN apt -y install build-essential
 
 
 # install nginx
@@ -44,7 +44,7 @@ RUN echo "extension=yaf.so" >> /etc/php/7.4/fpm/php.ini
 
 
 # install mysql client
-RUN apt-get -y install mysql-client
+RUN apt -y install mysql-client
 
 
 EXPOSE 80 
