@@ -12,8 +12,13 @@ FROM centos
 MAINTAINER dongping sheng <shengdongping@me.com>
 
 # update all 
-RUN apt-get update
-RUN apt-get -y upgrade
+RUN yum update
+RUN yum -y upgrade
+
+
+#base
+RUN yum -y install wget vim
+
 
 # install openssh-server
 RUN apt-get -y install openssh-server
@@ -27,13 +32,41 @@ RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
 
 
 # install PHP
-RUN apt install php7.4 php7.4-cli php7.4-fpm php7.4-mysql php7.4-json php7.4-bcmath php7.4-common php7.4-curl php-redis
+RUN yum -y install php72w php72w-cli php72w-common php72w-mysql php72w-pdo php72w-devel
 RUN sed -i s/\;cgi\.fix_pathinfo\s*\=\s*1/cgi.fix_pathinfo\=0/ /etc/php5/fpm/php.ini
 RUN echo "extension=yaf.so" >> /etc/php5/fpm/php.ini
 
 # install mysql client
 RUN apt-get -y install mysql-client
 
+
+
+RUN yum groupinstall "Development Tools" "Development Libraries"
+
+
+# install yaf framework
+RUN wget http://pecl.php.net/get/yaf-3.2.5.tgz
+RUN tar zxf yaf-3.2.5.tgz && cd yaf-3.2.5 && /usr/bin/phpize  && ./configure --with-php-config=/etc/php.ini --with-php-config=/usr/bin/php-config && make && make install
+
+RUN wget http://pecl.php.net/get/redis-5.3.1.tgz
+RUN tar zxf redis-5.3.1.tgz && cd redis-5.3.1 && /usr/bin/phpize  && ./configure --with-php-config=/etc/php.ini --with-php-config=/usr/bin/php-config && make && make install
+
+
+
+
+# config all
+RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
+COPY default /etc/nginx/sites-available/default
+COPY redis.ini /etc/php.d/redis.ini
+COPY yaf.ini /etc/php.d/yaf.ini
+
+
+# Config ssh server
+RUN mkdir -p /var/run/sshd
+RUN sed -i "s/^PermitRootLogin without-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
+RUN sed -i "s/^#GSSAPIAuthentication no/GSSAPIAuthentication no/g" /etc/ssh/sshd_config
+RUN echo "UseDNS no" >> /etc/ssh/sshd_config
+RUN echo 'root:root' | chpasswd
 
 COPY default /etc/nginx/sites-available/default
 
