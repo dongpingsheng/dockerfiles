@@ -33,7 +33,7 @@ RUN apt-get -y install openssh-server
 RUN apt-get -y install nginx
 
 # install PHP
-RUN apt-get -y install php5-cli php5-fpm php5-mysql php5-dev libpcre3-dev
+RUN apt-get -y install php5-cli php5-fpm php5-mysql php5-dev libpcre3-dev php5-curl
 
 # install mysql client
 RUN apt-get -y install mysql-client-5.5
@@ -60,8 +60,10 @@ COPY php.ini /etc/php5/cli/php.ini
 COPY redis.conf /etc/redis/redis.conf
 RUN echo "extension=yaf.so" >> /etc/php5/cli/php.ini
 RUN echo "extension=redis.so" >> /etc/php5/cli/php.ini
+RUN echo "extension=curl.so" >> /etc/php5/cli/php.ini
 RUN echo "extension=yaf.so" >> /etc/php5/fpm/php.ini
 RUN echo "extension=redis.so" >> /etc/php5/fpm/php.ini
+RUN echo "extension=curl.so" >> /etc/php5/fpm/php.ini
 
 # Config ssh server
 RUN mkdir -p /var/run/sshd
@@ -71,7 +73,6 @@ RUN echo "UseDNS no" >> /etc/ssh/sshd_config
 RUN echo 'root:root' | chpasswd
 
 
-RUN apt-get -y install php5-curl
 
 
 EXPOSE 80 
