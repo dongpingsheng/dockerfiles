@@ -12,7 +12,7 @@
 #    测试方法：http://192.168.59.103/phpinfo.php
 #
 
-FROM ubuntu:14.04
+FROM ubuntu:latest
 MAINTAINER dongping sheng <shengdongping@me.com>
 
 # update all 
@@ -49,7 +49,7 @@ RUN tar zxf redis-4.3.0.tgz && cd redis-4.3.0 && /usr/bin/phpize  && ./configure
 
 
 # redis
-RUN apt install -y redis-server
+RUN apt install -y redis-server redis
 
 
 RUN apt install -y vim
