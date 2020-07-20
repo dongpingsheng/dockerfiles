@@ -28,10 +28,10 @@ RUN apt-get -y install openssh-server
 RUN apt-get -y install nginx
 
 # install PHP
-RUN apt-get -y install php php-cli php-fpm php-mysql
+RUN apt-get -y install php5-cli php5-fpm php5-mysql
 
 # install mysql client
-RUN apt-get -y install mysql-client
+RUN apt-get -y install mysql-client-5.5
 
 
 # install build-essential 
