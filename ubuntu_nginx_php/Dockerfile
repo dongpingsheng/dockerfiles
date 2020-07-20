@@ -33,7 +33,8 @@ RUN apt-get -y install openssh-server
 RUN apt-get -y install nginx
 
 # install PHP
-RUN apt-get -y install php5-cli php5-fpm php5-mysql php5-dev php5-curl libpcre3-dev
+RUN apt-get -y install php5-cli php5-fpm php5-mysql php5-dev libpcre3-dev
+RUN apt-get -y install php5-curl
 
 # install mysql client
 RUN apt-get -y install mysql-client-5.5
