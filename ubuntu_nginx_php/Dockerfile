@@ -4,9 +4,9 @@
 #
 #    chcon -Rt svirt_sandbox_file_t /home/publish
 #
-#    docker run -v /home/publish/data0:/data0 -v /home/publish/log:/var/log -p 6379:6379 -p 80:80 -p 1080:22 -d --name=ubuntu_nginx_php_redis ubuntu_nginx_php_redis
+#    docker run -v /home/publish/data0:/data0 -v /home/publish/log:/var/log -p 80:80 -p 1080:22 -d --name=ubuntu_nginx_php_redis ubuntu_nginx_php_redis
 #
-#    docker run -v /home/publish/data0:/data0 -v /home/publish/log:/var/log -p 6379:6379 -p 80:80 -p 1080:22 -it ubuntu_nginx_php_redis /bin/bash
+#    docker run -v /home/publish/data0:/data0 -v /home/publish/log:/var/log -p 80:80 -p 1080:22 -it ubuntu_nginx_php_redis /bin/bash
 #    
 #    此镜象直接把/data0目录设置为document_root目录，所以需要把你自己的web目录通过-v参数挂接到docker容器里。
 #    测试方法：http://192.168.59.103/phpinfo.php
@@ -48,10 +48,6 @@ RUN wget http://pecl.php.net/get/redis-4.3.0.tgz
 RUN tar zxf redis-4.3.0.tgz && cd redis-4.3.0 && /usr/bin/phpize  && ./configure --with-php-config=/etc/php5/fpm/php.ini --with-php-config=/usr/bin/php-config5 && make && make install
 
 
-# redis
-RUN apt install -y redis-server
-
-
 RUN apt install -y vim
 
 
@@ -76,7 +72,6 @@ RUN echo 'root:root' | chpasswd
 EXPOSE 80 
 EXPOSE 1080 
 EXPOSE 22
-EXPOSE 6379
 
-CMD service ssh start && service php5-fpm start && service nginx start && redis-server /etc/redis/redis.conf
+CMD service ssh start && service php5-fpm start && service nginx start
 
