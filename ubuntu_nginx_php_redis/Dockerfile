@@ -26,8 +26,6 @@ RUN apt-get -y install openssh-server
 # install nginx
 
 RUN apt-get -y install nginx
-RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
-
 
 # install PHP
 RUN apt-get -y install php5-cli php5-fpm php5-mysql
@@ -52,8 +50,17 @@ RUN tar zxf redis-4.3.0.tgz && cd redis-4.3.0 && /usr/bin/phpize  && ./configure
 
 # redis
 RUN apt install -y redis-server redis
-COPY redis.conf /etc/redis/redis.conf
 
+
+# config all
+RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
+COPY redis.conf /etc/redis/redis.conf
+COPY default /etc/nginx/sites-available/default
+COPY php.ini /etc/php5/fpm/php.ini
+RUN echo "extension=yaf.so" >> /etc/php5/cli/php.ini
+RUN echo "extension=redis.so" >> /etc/php5/cli/php.ini
+RUN echo "extension=yaf.so" >> /etc/php5/fpm/php.ini
+RUN echo "extension=redis.so" >> /etc/php5/fpm/php.ini
 
 # Config ssh server
 RUN mkdir -p /var/run/sshd
@@ -61,13 +68,6 @@ RUN sed -i "s/^PermitRootLogin without-password/PermitRootLogin yes/g" /etc/ssh/
 RUN sed -i "s/^#GSSAPIAuthentication no/GSSAPIAuthentication no/g" /etc/ssh/sshd_config
 RUN echo "UseDNS no" >> /etc/ssh/sshd_config
 RUN echo 'root:root' | chpasswd
-
-COPY default /etc/nginx/sites-available/default
-COPY php.ini /etc/php5/fpm/php.ini
-RUN echo "extension=yaf.so" >> /etc/php5/cli/php.ini
-RUN echo "extension=redis.so" >> /etc/php5/cli/php.ini
-RUN echo "extension=yaf.so" >> /etc/php5/fpm/php.ini
-RUN echo "extension=redis.so" >> /etc/php5/fpm/php.ini
 
 
 EXPOSE 80 
