@@ -19,6 +19,11 @@ MAINTAINER dongping sheng <shengdongping@me.com>
 RUN apt-get update
 RUN apt-get -y upgrade
 
+# install base
+RUN apt-get -y install wget
+RUN apt install -y vim
+
+
 # install openssh-server
 RUN apt-get -y install openssh-server
 
@@ -28,7 +33,7 @@ RUN apt-get -y install openssh-server
 RUN apt-get -y install nginx
 
 # install PHP
-RUN apt-get -y install php5-cli php5-fpm php5-mysql
+RUN apt-get -y install php5-cli php5-fpm php5-mysql php5-dev php5-curl libpcre3-dev
 
 # install mysql client
 RUN apt-get -y install mysql-client-5.5
@@ -38,9 +43,6 @@ RUN apt-get -y install mysql-client-5.5
 RUN apt-get -y install build-essential
 
 # install yaf framework
-RUN apt-get -y install php5-dev
-RUN apt-get -y install libpcre3-dev
-RUN apt-get -y install wget
 RUN wget http://pecl.php.net/get/yaf-2.2.9.tgz
 RUN tar zxf yaf-2.2.9.tgz && cd yaf-2.2.9 && /usr/bin/phpize  && ./configure --with-php-config=/etc/php5/fpm/php.ini --with-php-config=/usr/bin/php-config5 && make && make install
 
@@ -48,7 +50,6 @@ RUN wget http://pecl.php.net/get/redis-4.3.0.tgz
 RUN tar zxf redis-4.3.0.tgz && cd redis-4.3.0 && /usr/bin/phpize  && ./configure --with-php-config=/etc/php5/fpm/php.ini --with-php-config=/usr/bin/php-config5 && make && make install
 
 
-RUN apt install -y vim
 
 
 # config all
