@@ -26,7 +26,6 @@ RUN apt-get -y install openssh-server
 # install nginx
 
 RUN apt-get -y install nginx
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
 
 
@@ -51,6 +50,11 @@ RUN wget http://pecl.php.net/get/redis-4.3.0.tgz
 RUN tar zxf redis-4.3.0.tgz && cd redis-4.3.0 && /usr/bin/phpize  && ./configure --with-php-config=/etc/php5/fpm/php.ini --with-php-config=/usr/bin/php-config5 && make && make install
 
 
+# redis
+RUN apt install -y redis-server redis
+COPY redis.conf /etc/redis/redis.conf
+
+
 # Config ssh server
 RUN mkdir -p /var/run/sshd
 RUN sed -i "s/^PermitRootLogin without-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
@@ -60,12 +64,16 @@ RUN echo 'root:root' | chpasswd
 
 COPY default /etc/nginx/sites-available/default
 COPY php.ini /etc/php5/fpm/php.ini
+RUN echo "extension=yaf.so" >> /etc/php5/cli/php.ini
+RUN echo "extension=redis.so" >> /etc/php5/cli/php.ini
 RUN echo "extension=yaf.so" >> /etc/php5/fpm/php.ini
 RUN echo "extension=redis.so" >> /etc/php5/fpm/php.ini
+
 
 EXPOSE 80 
 EXPOSE 1080 
 EXPOSE 22
+EXPOSE 6379
 
-CMD service ssh start && service php5-fpm start && nginx 
+CMD service ssh start && service php5-fpm start && service nginx start && redis-server /etc/redis/redis.conf
 
