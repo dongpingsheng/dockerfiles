@@ -78,5 +78,5 @@ EXPOSE 1080
 EXPOSE 22
 EXPOSE 6379
 
-CMD service ssh start && service php-fpm start && service nginx start && redis-server /etc/redis/redis.conf
+CMD service ssh start && service php7.4-fpm start && service nginx start && redis-server /etc/redis/redis.conf
 
