@@ -34,7 +34,6 @@ RUN apt-get -y install nginx
 
 # install PHP
 RUN apt-get -y install php5-cli php5-fpm php5-mysql php5-dev libpcre3-dev
-RUN apt-get -y install php5-curl
 
 # install mysql client
 RUN apt-get -y install mysql-client-5.5
@@ -55,9 +54,10 @@ RUN tar zxf redis-4.3.0.tgz && cd redis-4.3.0 && /usr/bin/phpize  && ./configure
 
 # config all
 RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
-COPY redis.conf /etc/redis/redis.conf
 COPY default /etc/nginx/sites-available/default
 COPY php.ini /etc/php5/fpm/php.ini
+COPY php.ini /etc/php5/cli/php.ini
+COPY redis.conf /etc/redis/redis.conf
 RUN echo "extension=yaf.so" >> /etc/php5/cli/php.ini
 RUN echo "extension=redis.so" >> /etc/php5/cli/php.ini
 RUN echo "extension=yaf.so" >> /etc/php5/fpm/php.ini
@@ -69,6 +69,9 @@ RUN sed -i "s/^PermitRootLogin without-password/PermitRootLogin yes/g" /etc/ssh/
 RUN sed -i "s/^#GSSAPIAuthentication no/GSSAPIAuthentication no/g" /etc/ssh/sshd_config
 RUN echo "UseDNS no" >> /etc/ssh/sshd_config
 RUN echo 'root:root' | chpasswd
+
+
+RUN apt-get -y install php5-curl
 
 
 EXPOSE 80 
