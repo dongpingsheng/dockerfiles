@@ -47,6 +47,9 @@ RUN apt-get -y install wget
 RUN wget http://pecl.php.net/get/yaf-2.2.9.tgz
 RUN tar zxf yaf-2.2.9.tgz && cd yaf-2.2.9 && /usr/bin/phpize  && ./configure --with-php-config=/etc/php5/fpm/php.ini --with-php-config=/usr/bin/php-config5 && make && make install
 
+RUN wget http://pecl.php.net/get/redis-4.3.0.tgz
+RUN tar zxf redis-4.3.0.tgz && cd redis-4.3.0 && /usr/bin/phpize  && ./configure --with-php-config=/etc/php5/fpm/php.ini --with-php-config=/usr/bin/php-config5 && make && make install
+
 
 # Config ssh server
 RUN mkdir -p /var/run/sshd
@@ -58,6 +61,7 @@ RUN echo 'root:root' | chpasswd
 COPY default /etc/nginx/sites-available/default
 COPY php.ini /etc/php5/fpm/php.ini
 RUN echo "extension=yaf.so" >> /etc/php5/fpm/php.ini
+RUN echo "extension=redis.so" >> /etc/php5/fpm/php.ini
 
 EXPOSE 80 
 EXPOSE 1080 
