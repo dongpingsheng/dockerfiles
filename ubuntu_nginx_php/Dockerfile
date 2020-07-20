@@ -79,5 +79,5 @@ EXPOSE 80
 EXPOSE 1080 
 EXPOSE 22
 
-CMD service ssh start && service php5-fpm start && service nginx start
+CMD service ssh start && service php5-fpm start && service nginx start && tail -f /var/log/nginx/access.log
 
