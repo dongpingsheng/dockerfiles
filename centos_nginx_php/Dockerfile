@@ -30,7 +30,7 @@ RUN yum -y install nginx
 # install PHP
 RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
-RUN yum -y install php php-cli php-common php-pdo php-devel
+RUN yum -y install php php-cli php-common php-pdo php-json php-mysqlnd php-devel
 
 
 RUN yum -y groupinstall "Development Tools"
