@@ -44,28 +44,21 @@ RUN wget http://pecl.php.net/get/redis-5.3.1.tgz
 RUN tar zxf redis-5.3.1.tgz && cd redis-5.3.1 && /usr/bin/phpize  && ./configure --with-php-config=/etc/php.ini --with-php-config=/usr/bin/php-config && make && make install
 
 
+# config all
+COPY redis.ini /etc/php.d/redis.ini
+COPY yaf.ini /etc/php.d/yaf.ini
+RUN sed -i s/\;cgi\.fix_pathinfo\s*\=\s*1/cgi.fix_pathinfo\=0/ /etc/php.ini
 
-#
-## config all
-#RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-#RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
-#
-#COPY default /etc/nginx/sites-available/default
-#COPY redis.ini /etc/php.d/redis.ini
-#COPY yaf.ini /etc/php.d/yaf.ini
-#RUN sed -i s/\;cgi\.fix_pathinfo\s*\=\s*1/cgi.fix_pathinfo\=0/ /etc/php5/fpm/php.ini
-#
-#
-## Config ssh server
-#RUN mkdir -p /var/run/sshd
-#RUN sed -i "s/^PermitRootLogin without-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
-#RUN sed -i "s/^#GSSAPIAuthentication no/GSSAPIAuthentication no/g" /etc/ssh/sshd_config
-#RUN echo "UseDNS no" >> /etc/ssh/sshd_config
-#RUN echo 'root:root' | chpasswd
-#
-#COPY default /etc/nginx/sites-available/default
-#
-#EXPOSE 80
-#
-#CMD service php7-fpm start && nginx
+
+# Config ssh server
+RUN mkdir -p /var/run/sshd
+RUN sed -i "s/^PermitRootLogin without-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
+RUN sed -i "s/^#GSSAPIAuthentication no/GSSAPIAuthentication no/g" /etc/ssh/sshd_config
+RUN echo "UseDNS no" >> /etc/ssh/sshd_config
+RUN echo 'root:root' | chpasswd
+
+
+EXPOSE 80
+
+CMD service php7-fpm start && nginx
 
