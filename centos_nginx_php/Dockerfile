@@ -30,14 +30,10 @@ RUN yum -y install nginx
 # install PHP
 RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
-RUN yum -y install php72w php72w-cli php72w-common php72w-mysql php72w-pdo php72w-devel
-
-# install mysql client
-RUN apt-get -y install mysql-client
+RUN yum -y install php php-cli php-common php-pdo php-devel
 
 
-
-RUN yum groupinstall "Development Tools" "Development Libraries"
+RUN yum groupinstall "Development Tools"
 
 
 # install yaf framework
