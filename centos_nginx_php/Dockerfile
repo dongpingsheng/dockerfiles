@@ -33,7 +33,7 @@ RUN rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
 RUN yum -y install php php-cli php-common php-pdo php-devel
 
 
-RUN yum groupinstall "Development Tools"
+RUN yum -y groupinstall "Development Tools"
 
 
 # install yaf framework
