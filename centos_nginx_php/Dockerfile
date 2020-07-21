@@ -45,8 +45,8 @@ RUN tar zxf redis-5.3.1.tgz && cd redis-5.3.1 && /usr/bin/phpize  && ./configure
 
 
 # config all
-COPY redis.ini /etc/php.d/redis.ini
-COPY yaf.ini /etc/php.d/yaf.ini
+COPY redis.ini /etc/php.d/50-redis.ini
+COPY yaf.ini /etc/php.d/50-yaf.ini
 RUN sed -i s/\;cgi\.fix_pathinfo\s*\=\s*1/cgi.fix_pathinfo\=0/ /etc/php.ini
 
 
