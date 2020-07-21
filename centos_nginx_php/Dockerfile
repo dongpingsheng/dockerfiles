@@ -12,7 +12,7 @@ FROM centos
 MAINTAINER dongping sheng <shengdongping@me.com>
 
 # update all 
-RUN yum update
+RUN yum -y update
 RUN yum -y upgrade
 
 
@@ -21,20 +21,16 @@ RUN yum -y install wget vim
 
 
 # install openssh-server
-RUN apt-get -y install openssh-server
+RUN yum -y install openssh-server
 
 
 # install nginx
-
-RUN apt-get -y install nginx
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
-
+RUN yum -y install nginx
 
 # install PHP
+RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+RUN rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
 RUN yum -y install php72w php72w-cli php72w-common php72w-mysql php72w-pdo php72w-devel
-RUN sed -i s/\;cgi\.fix_pathinfo\s*\=\s*1/cgi.fix_pathinfo\=0/ /etc/php5/fpm/php.ini
-RUN echo "extension=yaf.so" >> /etc/php5/fpm/php.ini
 
 # install mysql client
 RUN apt-get -y install mysql-client
@@ -55,10 +51,13 @@ RUN tar zxf redis-5.3.1.tgz && cd redis-5.3.1 && /usr/bin/phpize  && ./configure
 
 
 # config all
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
+
 COPY default /etc/nginx/sites-available/default
 COPY redis.ini /etc/php.d/redis.ini
 COPY yaf.ini /etc/php.d/yaf.ini
+RUN sed -i s/\;cgi\.fix_pathinfo\s*\=\s*1/cgi.fix_pathinfo\=0/ /etc/php5/fpm/php.ini
 
 
 # Config ssh server
