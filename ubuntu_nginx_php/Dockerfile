@@ -76,7 +76,7 @@ RUN echo 'root:root' | chpasswd
 
 
 EXPOSE 80 
-EXPOSE 22
+EXPOSE 1080
 
 CMD service ssh start && service php5-fpm start && service nginx start && tail -f /var/log/nginx/access.log
 
